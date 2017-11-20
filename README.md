@@ -1,8 +1,8 @@
-# Interview pairing exercise
+# Interview exercise
 
 This exercise is, first and foremost, something fun to work on. It's designed to give you a taste of what it's like to 
-work at Airspace and for us to get a sense of how you program. There are 3 tasks to work through. Please walk us through your development process / thoughts while coding and ask questions if you 
-have any. Lastly, don't be afraid to show off your Google skills. Those impress us too.
+work at Airspace and for us to get a sense of how you program. There are 3 tasks to work through. If you have any questions 
+at all please shoot us an email and we'll reply as soon as we can. 
 
 ## Get started
 Assuming you have a working Ruby environment, from the repo root do:
