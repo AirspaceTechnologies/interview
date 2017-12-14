@@ -1,0 +1,17 @@
+<table class="table">
+  <caption>Addresses</caption>
+  <thead>
+    <tr>
+      <th scope="col">&nbsp;</th>
+      <th scope="col">Full Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% addresses.each_with_index do |address, i| %>
+    <tr>
+      <th scope="row"><%= i %></th>
+      <td><%= address.full_address %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

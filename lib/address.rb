@@ -1,4 +1,5 @@
 require_relative 'geocoding'
+require 'yaml'
 
 # Represents an Address or location
 class Address
@@ -10,6 +11,14 @@ class Address
       public_send(m, attrs.fetch(key)) if respond_to?(m)
     end
     update_address_and_coordinates_with_service_if_needed
+  end
+
+  def self.load(yml_file_path)
+    return false unless File.exist?(yml_file_path)
+    data = YAML.load_file(yml_file_path)
+    data.collect do |coordinates|
+      new(lat: coordinates[0], lng: coordinates[1])
+    end
   end
 
   def coordinates
