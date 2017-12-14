@@ -1,8 +1,9 @@
 
 RSpec.describe Address do
-  let(:full_address) { '1600 Pennsylvania Avenue NW Washington, D.C. 20500 USA' }
-  let(:lat) { 38.8976633 }
-  let(:lng) { -77.0365739 }
+  let(:white_house) { FactoryGirl.build(:address, :as_white_house) }
+  let(:full_address) { white_house.full_address }
+  let(:lat) { white_house.lat }
+  let(:lng) { white_house.lng }
 
   before do
     Geocoder::Lookup::Test.add_stub(
@@ -49,12 +50,43 @@ RSpec.describe Address do
     let(:detroit) { FactoryGirl.build :address, :as_detroit }
     let(:kansas_city) { FactoryGirl.build :address, :as_kansas_city }
 
-    xit 'calculates distance with the Geocoder API' do
+    it 'calculates distance with the Geocoder API' do
       expect(Geocoder::Calculations).to receive(:distance_between).with detroit.coordinates, kansas_city.coordinates
+      detroit.miles_to(kansas_city)
     end
 
-    xit 'returns the distance between two addresses' do
+    it 'returns the distance between two addresses' do
       expect(detroit.miles_to(kansas_city)).to be > 0
+    end
+  end
+
+  describe 'load' do
+    subject { Address.load('dummy/data.yml') }
+    before do
+      expect(File).to receive(:exist?).at_least(:once).and_return(true) # TODO: expecting with the path throws a uninitialized constant RSpec::Support::Differ. No idea.
+    end
+    context 'with address' do
+      before do
+        expect(YAML).to receive(:load_file).with('dummy/data.yml').and_return([{ 'full_address' => full_address }])
+      end
+      it 'should create legit record' do
+        created = subject.first
+        expect(created.full_address).to eq full_address
+        expect(created.lat).to eq lat
+        expect(created.lng).to eq lng
+        # expect(subject).to eq 1
+      end
+    end
+    context 'with lat/lng' do
+      before do
+        expect(YAML).to receive(:load_file).with('dummy/data.yml').and_return([{ 'lat' => lat, 'lng' => lng }])
+      end
+      it 'should create legit record' do
+        created = subject.first
+        expect(created.full_address).to eq full_address
+        expect(created.lat).to eq lat
+        expect(created.lng).to eq lng
+      end
     end
   end
 end

@@ -17,5 +17,11 @@ FactoryGirl.define do
       lat 39.077531
       lng -94.572519
     end
+
+    trait :as_white_house do
+      full_address '1600 Pennsylvania Avenue NW Washington, D.C. 20500 USA'
+      lat 38.8976633
+      lng -77.0365739
+    end
   end
 end

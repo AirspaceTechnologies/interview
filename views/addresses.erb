@@ -2,15 +2,15 @@
   <caption>Addresses</caption>
   <thead>
     <tr>
-      <th scope="col">&nbsp;</th>
       <th scope="col">Full Address</th>
+      <th scope="col">Distance From White House</th>
     </tr>
   </thead>
   <tbody>
-    <% addresses.each_with_index do |address, i| %>
+    <% addresses.each do |address| %>
     <tr>
-      <th scope="row"><%= i %></th>
       <td><%= address.full_address %></td>
+      <td><%= sprintf("%.2f Miles", address.miles_to(white_house)) %>
     </tr>
     <% end %>
   </tbody>

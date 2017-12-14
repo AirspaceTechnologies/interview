@@ -13,16 +13,28 @@ class Address
     update_address_and_coordinates_with_service_if_needed
   end
 
+  def self.miles_between(*coords)
+    Geocoder::Calculations.distance_between(*coords)
+  end
+
   def self.load(yml_file_path)
     return false unless File.exist?(yml_file_path)
     data = YAML.load_file(yml_file_path)
-    data.collect do |coordinates|
-      new(lat: coordinates[0], lng: coordinates[1])
+    allowed_keys = %w[full_address lat lng].freeze
+    data.collect do |attributes|
+      # attributes.slice!(:full_address, :lat, :lng)
+      record = new(full_address: attributes['full_address'], lat: attributes['lat'], lng: attributes['lng'])
+      record
     end
   end
 
   def coordinates
     [lat, lng]
+  end
+
+  def miles_to(other_address)
+    # Might want to type check/ validate other_address here
+    Address.miles_between(coordinates, other_address&.coordinates)
   end
 
   # The object has coordinates

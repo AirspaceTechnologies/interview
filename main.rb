@@ -13,7 +13,7 @@ class Main < Sinatra::Base
     if contents.respond_to?(:each)
       contents = contents.map!(&:freeze)
     else
-      contents.freeze!
+      contents.freeze
     end
     settings.cache[key] = contents
   end
@@ -22,7 +22,10 @@ class Main < Sinatra::Base
     set :cache, Concurrent::Hash.new(0)
     # Warm up the cache with addresses
     # TODO: No tests!
-    warm_cache(:addresses) { Address.load('data/addresses.yml') } unless ENV['RACK_ENV'] == 'test'
+    unless ENV['RACK_ENV'] == 'test'
+      warm_cache(:addresses) { Address.load('data/addresses.yml') }
+      warm_cache(:white_house) { Address.load('data/white_house.yml')&.first }
+    end
   end
 
   get '/' do
@@ -36,6 +39,10 @@ class Main < Sinatra::Base
   helpers do
     def addresses
       settings.cache[:addresses]
+    end
+
+    def white_house
+      settings.cache[:white_house]
     end
   end
 end
