@@ -10,7 +10,7 @@ RSpec.describe 'Addresses' do
   describe :index do
     let(:addresses) { FactoryGirl.build_list(:address, 3) }
     before do
-      expect(Main.helpers).to receive(:addresses).and_return(addresses)
+      expect(Main.settings.cache).to receive(:[]).with(:addresses).and_return(addresses)
       get '/addresses'
     end
     subject(:response) { last_response }
