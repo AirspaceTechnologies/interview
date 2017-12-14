@@ -1,44 +1,47 @@
-RSpec.describe Address do
-  let(:full_address) { '1600 Pennsylvania Avenue NW Washington, D.C. 20500 U.S.' }
-  let(:lat) { 40.181306 }
-  let(:lng) { -80.265949 }
 
-  subject(:address) { described_class.new }
+RSpec.describe Address do
+  let(:full_address) { '1600 Pennsylvania Avenue NW Washington, D.C. 20500 USA' }
+  let(:lat) { 38.8976633 }
+  let(:lng) { -77.0365739 }
+
+  before do
+    Geocoder::Lookup::Test.add_stub(
+      full_address, [
+        { 'coordinates' => [lat, lng] }
+      ]
+    )
+    Geocoder::Lookup::Test.add_stub(
+      [lat, lng].join(','), [
+        {
+          'address' => full_address,
+          'city' => 'Washington',
+          'state'        => 'District of Columbia',
+          'state_code'   => 'DC',
+          'country'      => 'United States',
+          'country_code' => 'US',
+          'postal_code'  => '20500'
+        }
+      ]
+    )
+  end
 
   describe 'geocoding' do
-    let(:payload) {{  'longt' => lng, 'latt' => lat }}
-    let(:result) { [ double(data: payload) ] }
+    subject(:address) { described_class.new(full_address: full_address) }
 
+    it { is_expected.to be_geocoded }
     it 'geocodes with Geocoder API' do
-      expect(Geocoder).to receive(:search).with(full_address).and_return result
-    end
-
-    it 'is geocoded' do
-      expect(address).to be_geocoded
+      expect(Geocoder).to receive(:search).with(full_address).and_call_original
+      address
     end
   end
 
   describe 'reverse geocoding' do
-    let :payload do
-      {   
-        'usa'=> {
-          'uscity' => 'WASHINGTON',
-          'usstnumber' => '1',
-          'state' => 'PA',
-          'zip' => '20500',
-          'usstaddress' => 'Pennsylvania AVE'
-        }
-      }
-    end
-    
-    let(:result) { [ double(data: payload) ] }
+    subject(:address) { described_class.new(lat: lat, lng: lng) }
 
+    it { is_expected.to be_reverse_geocoded }
     it 'reverse geocodes with Geocoder API' do
-      expect(Geocoder).to receive(:search).with("#{lat},#{lng}").and_return result
-    end
-
-    it 'is reverse geocoded' do
-      expect(address).to be_reverse_geocoded
+      expect(Geocoder).to receive(:search).with("#{lat},#{lng}").and_call_original
+      address
     end
   end
 
