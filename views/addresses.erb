@@ -1,0 +1,21 @@
+<div class="container-fluid">
+  <div class="row">
+    <table class="table">
+      <caption>Addresses</caption>
+      <thead>
+        <tr>
+          <th scope="col">Full Address</th>
+          <th scope="col">Distance From White House</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% addresses.each do |address| %>
+          <tr>
+            <td><%= address.full_address %></td>
+            <td><%= sprintf("%.2f Miles", address.miles_to(white_house)) %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
