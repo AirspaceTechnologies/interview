@@ -19,9 +19,9 @@ class Main < Sinatra::Base
   end
 
   configure do
+    # TODO: No tests!
     set :cache, Concurrent::Hash.new(0)
     # Warm up the cache with addresses
-    # TODO: No tests!
     unless ENV['RACK_ENV'] == 'test'
       warm_cache(:white_house) { Address.load('data/white_house.yml')&.first }
       warm_cache(:addresses) { Address.load('data/addresses.yml').sort_by {|a| a.miles_to(settings.cache[:white_house]) } }

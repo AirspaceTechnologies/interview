@@ -1,0 +1,24 @@
+== Implementation Notes / Design Decisions
+
+I know that one of the biggest reasons why many companies use code exercises if so see how an individual
+would approach a problem and come to decision / implement it.  Since I'm unable to do this in real-time,
+I'll use this email to capture my thoughts as to why I made certain decisions.
+
+Approaching this as an excercise, I will try not to needlessly complicate the code which additional code that
+doesn't really add value to my approach. This would include, but not limited to: Perfomance optimizations (I'll point
+those out in comments), off-track refactorings,
+
+==== Persistance
+Any kind of a database layer was noticibly left out of the base project. As such, I decided to imlement this without
+a distinct persistance layer, using just a light, thin caching layer in Sinatra to not needless re-geocode addresses.
+
+
+==== Testing
+I opted to remove the mock/doubles being used in the spec for the Geocoding service in lue of Geocoders built-in 'test'
+provider which allows for very clean stubbing of requests, along with returning a full `Geocoder::Result` instance rather
+than a double.
+
+Off Track refactorings:
+  - Bump ruby to 2.3.5
+
+
