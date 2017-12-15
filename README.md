@@ -10,9 +10,10 @@ Assuming you have a working Ruby environment, from the repo root do:
 1. `bundle install`
 2. `rackup -p 4567`
 3. Browse to [http://localhost:4567](http://localhost:4567)
-4. Run tests with `rspec spec`
 
 Upon success you'll have a working [Sinatra](https://github.com/sinatra/sinatra) application to play with.
+
+4. Run tests with `rspec spec`
 
 ## Task #1: Reverse geocode and display addresses
 Given the following coordinates:
