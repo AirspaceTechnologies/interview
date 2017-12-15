@@ -6,6 +6,7 @@ class Address
   attr_accessor :lat, :lng, :full_address
 
   def initialize(attrs = {})
+    @cached_distances = {}
     attrs.each_key do |key|
       m = "#{key}="
       public_send(m, attrs.fetch(key)) if respond_to?(m)
@@ -20,10 +21,9 @@ class Address
   def self.load(yml_file_path)
     return false unless File.exist?(yml_file_path)
     data = YAML.load_file(yml_file_path)
-    allowed_keys = %w[full_address lat lng].freeze
     data.collect do |attributes|
       # attributes.slice!(:full_address, :lat, :lng)
-      record = new(full_address: attributes['full_address'], lat: attributes['lat'], lng: attributes['lng'])
+      record = new(full_address: attributes.fetch('full_address', nil), lat: attributes.fetch('lat', nil), lng: attributes.fetch('lng', nil))
       record
     end
   end
@@ -34,7 +34,12 @@ class Address
 
   def miles_to(other_address)
     # Might want to type check/ validate other_address here
-    Address.miles_between(coordinates, other_address&.coordinates)
+    coords = other_address&.coordinates
+
+    # Lets memoize these results, at least at the instance level.
+    @cached_distances.fetch(coords) do
+      @cached_distances[coords] = Address.miles_between(coordinates, other_address&.coordinates)
+    end
   end
 
   # The object has coordinates
