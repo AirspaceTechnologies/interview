@@ -1,9 +1,185 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-offset-4 col-md-4">
-      <h1 class="bg-primary text-center p25">
-        Bootstrapped!
+      <h1 id="runButton" class="bg-primary text-center p25">
+        Run
       </h1>
     </div>
   </div>
+  <div class="row">
+  	<div class="col-xs-12">
+  		<div id="map"></div>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-xs-12">
+  		<div class="table-responsive">
+  			<table id="addresses" class="table table-hover">
+  				<thead>
+  					<tr>
+  						<th>Latitude</th>
+  						<th>Longitude</th>
+  						<th>Address</th>
+  						<th>Miles to the White House</th>
+  					</tr>
+  				</thead>
+  				<tbody>
+  				</tbody>
+  			</table>
+  		</div>
+  	</div>
+  </div>
 </div>
+<script type="text/javascript">
+	(function(){
+		var coordinates = <%= coordinates.to_json %>; // store coordinates to reverse geocode
+		var addresses = <%= addresses.map(&:json_attributes).to_json %>; // store addresses already reverse geocoded
+		var map;
+		var markers = [];
+		// console.log(addresses);
+
+		var running = false; // avoid double clicks before completion
+
+		var whiteHouse = <%= whiteHouse.json_attributes.to_json %>;
+
+		// store callbacks to execute upon return from async reverse geocoding
+		// letting all the requests happen at once causes db locking in development mode
+		var reverseGeocodingCallbacks = []; 
+
+
+		function addressToTableRow(address) {
+			var full_address = address.full_address || "";
+			return `<tr><td>${address.lat}</td><td>${address.lng}</td><td>${full_address}</td><td>${address.miles_to_dc}</td><tr>`;
+		}
+
+		// Convert all addresses to table rows
+		function fillTable() {
+			$('#addresses > tbody').html(addresses.sort(function(a, b){ return a.miles_to_dc - b.miles_to_dc; }).map(addressToTableRow).join('\n'));
+		}
+		fillTable();
+		
+
+		function clearTable() {
+			$('#addresses > tbody').html('');
+		}
+
+		function refreshTable() {
+			clearTable();
+			fillTable();
+		}
+
+
+		function reverseGeocodeCoordinate(coordinate) {
+			$.ajax('/reverse_geocode', {
+				method: 'POST',
+				data: {lat: coordinate[0], lng: coordinate[1]}, 
+				dataType: 'json',
+				success: function(data){ 
+					console.log(data);
+					addAddressToMap(data);
+					addresses.push(data);
+					refreshTable();
+					// $('#addresses > tbody').append(addressToTableRow(data));
+					var callback = reverseGeocodingCallbacks.shift();
+					if(typeof callback === 'function') callback();
+					else running = false; // Enable clicking
+				},
+				error: function(data){ console.log(data); }
+			});
+		}
+
+		// clears all addresses form the table, local cache, and db
+		function clearAll(callback) {
+			clearTable();
+			clearMap();
+			$.ajax('/clear_all', {
+				method: 'DELETE',
+				success: function(data){ 
+					addresses = [];
+					if(typeof callback === 'function') callback();
+				},
+				error: function(data){ console.log(data); }
+			});
+		}
+
+		// clears addresses then reloads them via reverse geocoding
+		function run() {
+			clearAll(function(){
+				reverseGeocodingCallbacks = coordinates.map(function(coordinate){ 
+					return function(){ reverseGeocodeCoordinate(coordinate) }; 
+				});
+				reverseGeocodingCallbacks.shift()();
+			});
+
+		}
+
+		$('#runButton').click(function(){
+			if(!running) {
+				// Disable clicking
+				running = true;
+				run();
+			}
+			
+		});
+
+		// Google maps
+		window.initMap = function(){
+			map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 3, minZoom: 2,
+				center: {lat: 47, lng: -100}
+			});
+
+			var whiteHouseIcon = {
+          	path: google.maps.SymbolPath.CIRCLE,
+				    fillColor: '#000',
+				    fillOpacity: 1,
+				    scale: 2,
+				    strokeColor: 'green',
+				    strokeWeight: 14
+          };
+
+			new google.maps.Marker({
+          position: whiteHouse,
+          map: map,
+          icon: whiteHouseIcon
+      });
+
+			for (i in addresses) {
+				addAddressToMap(addresses[i]);
+			}
+		};
+
+		function clearMap() {
+			var marker = markers.pop();
+			while(marker){
+				marker.setMap(null);
+				marker = markers.pop();
+			}
+		}
+
+		function addAddressToMap(address){
+			if (map) {
+				var icon = {
+          	path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+				    fillColor: '#1f3aff',
+				    fillOpacity: 0.8,
+				    scale: 3,
+				    strokeColor: '#000',
+				    strokeWeight: 1
+          };
+				markers.push(new google.maps.Marker({
+          position: address,
+          map: map,
+          icon: icon
+        }));
+			}
+		}
+
+		
+
+		
+	})();
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdtwKUeqkYfD02Q7NlxJbZw9flsBvRMRs&callback=initMap">
+</script>
