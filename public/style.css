@@ -1,5 +1,9 @@
 /* custom CSS goes here */
 
+body {
+	background-color: #eee;
+}
+
 .p25 {
     padding: 25px;
 }
@@ -9,3 +13,16 @@
 	height: 400px;
 }
 
+.table {
+	background-color: #ddd;
+	border-color: #999;
+}
+
+.table-bordered td, .table-bordered th{
+    border-color: #999 !important;
+}
+
+.table>tbody>tr.active>td {
+	background-color: #1f3aff;
+	color: #fff;
+}
