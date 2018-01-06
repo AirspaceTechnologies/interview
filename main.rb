@@ -4,7 +4,7 @@ require 'sinatra/base'
 Dir['./lib/*.rb'].each { |f| require f }
 
 class Main < Sinatra::Base
-  
+
   get '/' do
   	coordinates = [
   		[61.582195, -149.443512], 
@@ -13,7 +13,7 @@ class Main < Sinatra::Base
   		[45.787839, -108.502110],
   		[35.109937, -89.959983]
   	]
-  	addresses = Address.all
+  	addresses = Address.all # Only 5 addresses so all is ok
     erb :index, locals: { addresses: addresses, coordinates: coordinates, whiteHouse: Address::WHITE_HOUSE }
   end
 
