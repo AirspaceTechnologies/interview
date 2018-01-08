@@ -1,3 +1,4 @@
+require 'spec_helper'
 require "geocoder/results/#{Geocoder.config[:lookup]}"
 
 RSpec.describe Address do
@@ -32,14 +33,12 @@ RSpec.describe Address do
 
   describe 'reverse geocoding' do
     let :payload do
-      {   
-        'usa'=> {
-          'uscity' => 'WASHINGTON',
-          'usstnumber' => '1',
-          'state' => 'PA',
-          'zip' => '20500',
-          'usstaddress' => 'Pennsylvania AVE'
-        }
+      {
+        'city' => 'WASHINGTON',
+        'stnumber' => '1',
+        'prov' => 'PA',
+        'zip' => '20500',
+        'staddress' => 'Pennsylvania AVE'
       }
     end
    

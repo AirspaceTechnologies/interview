@@ -18,10 +18,12 @@ class Main < Sinatra::Base
   end
 
   delete '/clear_all' do
+    content_type :json
   	Address.destroy_all.to_json
   end
 
   post '/reverse_geocode' do
+    content_type :json
   	address = Address.new(lat: params[:lat], lng: params[:lng])
   	address.reverse_geocode
   	address.save ## Comment out to disable caching. If caching is disabled consider allowing all the ajax calls at once in js.

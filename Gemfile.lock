@@ -19,6 +19,7 @@ GEM
     byebug (9.0.5)
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
+    database_cleaner (1.6.2)
     diff-lcs (1.2.5)
     factory_girl (4.7.0)
       activesupport (>= 3.0.0)
@@ -41,6 +42,8 @@ GEM
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
+    rack-test (0.8.2)
+      rack (>= 1.0, < 3)
     rake (12.3.0)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
@@ -74,11 +77,13 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (= 4.2.5)
+  database_cleaner
   factory_girl
   faker
   geocoder
   pry-byebug
   puma
+  rack-test
   rake
   rspec
   sinatra

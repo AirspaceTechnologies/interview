@@ -17,5 +17,6 @@ FactoryGirl.define do
       lat 39.077531
       lng -94.572519
     end
+
   end
 end

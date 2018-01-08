@@ -42,9 +42,5 @@ class Address < ActiveRecord::Base
     attributes.dup.merge({miles_to_dc: miles_to_dc.round(2)})
   end
 
-  # def to_json
-  #   attributes.dup.merge({miles_to_dc: miles_to_dc}).to_json
-  # end
-
 
 end
