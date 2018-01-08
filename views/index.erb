@@ -1,9 +1,42 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-offset-4 col-md-4">
-      <h1 class="bg-primary text-center p25">
-        Bootstrapped!
-      </h1>
+    <div class="col-xs-12 text-center p25">
+      <div id="runButton" class="btn btn-success btn-lg">Run</div>
     </div>
   </div>
+  <div class="row">
+  	<div class="col-xs-12">
+  		<div id="map"></div>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="col-xs-12">
+  		<div class="table-responsive">
+  			<table id="addresses" class="table table-bordered">
+  				<thead>
+  					<tr>
+  						<th>Latitude</th>
+  						<th>Longitude</th>
+  						<th>Address</th>
+  						<th>Miles to the White House</th>
+  					</tr>
+  				</thead>
+  				<tbody>
+  				</tbody>
+  			</table>
+  		</div>
+  	</div>
+  </div>
 </div>
+<script type="text/javascript">
+	(function(){
+		setCoordinates(<%= coordinates.to_json %>); // store coordinates to reverse geocode
+		setAddresses(<%= addresses.map(&:json_attributes).to_json %>); // store addresses already reverse geocoded
+		setWhiteHouse(<%= whiteHouse.json_attributes.to_json %>);
+		fillAddressTable(); // Initial filling of the table
+		setRunButtonClick('#runButton');
+	})();
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdtwKUeqkYfD02Q7NlxJbZw9flsBvRMRs&callback=initMap">
+</script>
