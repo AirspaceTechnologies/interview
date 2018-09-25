@@ -55,6 +55,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   factory_girl
@@ -66,4 +67,4 @@ DEPENDENCIES
   sinatra
 
 BUNDLED WITH
-   1.12.5
+   1.16.2

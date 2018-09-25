@@ -1,9 +1,26 @@
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-offset-4 col-md-4">
+    <div class="col-md-12">
       <h1 class="bg-primary text-center p25">
-        Bootstrapped!
+        Tho Nguyen - Airspace Technologies interview
       </h1>
     </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordred table-striped">
+        <thead>
+          <th>Address</th>
+          <th>Determined distance</th>
+        </thead>
+        <% addresses.each do |add| %>
+          <tr>
+            <td><%= add[:address] %></td>
+            <td><%= add[:determined_distance].round(2) %> miles</td>
+          </tr>
+        <% end %>
+      </table>
+    </div>   
   </div>
 </div>
