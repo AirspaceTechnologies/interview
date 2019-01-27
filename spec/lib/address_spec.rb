@@ -5,6 +5,17 @@ RSpec.describe Address do
 
   subject(:address) { described_class.new }
 
+  describe 'instantiation' do
+    it 'has attribute accessors for lat, lng, full_address, ' do
+      address.lat = lat
+      address.lng = lng
+      address.full_address = full_address
+      expect(address.lat).to eq(lat)
+      expect(address.lng).to eq(lng)
+      expect(address.full_address).to eq(full_address)
+    end
+  end
+
   describe 'geocoding' do
     let(:payload) {{  'longt' => lng, 'latt' => lat }}
     let(:result) { [ double(data: payload) ] }
