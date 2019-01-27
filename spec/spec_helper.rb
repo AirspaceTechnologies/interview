@@ -1,6 +1,6 @@
 require 'pry'
 require 'faker'
-require 'factory_girl'
+require 'factory_bot'
 require 'factories'
 
 Dir[
