@@ -27,8 +27,8 @@ GEM
       byebug (~> 9.0)
       pry (~> 0.10)
     puma (3.4.0)
-    rack (1.6.4)
-    rack-protection (1.5.3)
+    rack (1.6.11)
+    rack-protection (1.5.5)
       rack
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
@@ -66,4 +66,4 @@ DEPENDENCIES
   sinatra
 
 BUNDLED WITH
-   1.12.5
+   1.17.3
