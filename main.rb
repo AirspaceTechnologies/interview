@@ -15,8 +15,8 @@ class Main < Sinatra::Base
     @address_list = []
 
     @coordinate_list.each do | coordinates |
-        result = reverse_geocode(coordinates.lat, coordinates.lng)
-        @address_list.push(result)
+        address = Address.new(:lat => coordinates.lat, :lng => coordinates.lng).find_address
+        @address_list.push(address)
     end
 
     erb :index #, locals: { address: address }

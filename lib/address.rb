@@ -4,24 +4,21 @@ require_relative 'geocoding'
 class Address
   attr_accessor :lat, :lng, :full_address
 
-  def initialize()
-
+  def initialize(args = {})
+    @lat = args[:lat] if args[:lat]
+    @lng = args[:lng] if args[:lng]
+    @full_address = args[:full_address] if args[:full_address]
   end
-  # @full_address = args[:full_address] || find_address(args[:lat], args[:lng])
 
-  # def lat
-  #   @lat ||= Geocoder.search("#{lat}, #{lng}").first.standard
-  # end
-  #
-  # def full_address
-  #   @full_address ||= Geocoder.search("#{lat}, #{lng}").first.standard
-  # end
-  #
   def find_address
+    @result = AccessGeocoder.reverse_geocode(self.lat, self.lng).first.data["usa"]
+    self.full_address = "#{@result['usstnumber']} #{@result['usstaddress']}, #{@result['uscity']} #{@result['state']} #{@result['zip']}"
   end
 
   def find_lat_lng
-    geocode(self.full_address)
+    @result = AccessGeocoder.geocode(self.full_address).first.data
+    self.lng = @result['longt']
+    self.lat = @result['latt']
   end
 
   def geocoded?
