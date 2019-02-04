@@ -2,17 +2,17 @@ require_relative 'geocoding'
 
 
 class Address
-  geocoded_by :address       
-  after_validation :geocode
-
   attr_accessor :lat, :lng, :full_address
 
-  def initialize (lat, lng, full_address=nil)
-    @lat = lat
-    @lng = lng
-    @full_address = full_address || find_address(:lat, :lng)
+  def initialize (full_address)
+    @full_address = full_address
   end
 
+
+  def get_lat_lng(full_address)
+    coordinates = geocode(full_address)
+    puts coordinates
+  end
   # def self.all
   #   address = []
   #   @@list.each do |coordinates|
@@ -20,10 +20,5 @@ class Address
   #   end
   #   address
   # end
-
-  def find_address(lattitude, longitude)
-    reverse_geocoded_address = Geocoder.reverse_geocoded_by :lattitude, :longitude
-    puts reverse_geocoded_address
-  end
 
 end
