@@ -1,20 +1,20 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col col-sm-8">
-      <div class="jumbotron jumbotron-fluid">
-        <h1 class="display-4">Hello, world!</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-        <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-      </div>
-      <!-- w/ bg-primary text-center p25 -->
+<div class="row align-items-center">
+  <div class="col col-md-8 col-sm-8">
+    <div class="jumbotron mh-100">
+      <h1 class="display-4 text-center">Geocoded!</h1>
+      <hr class="my-4">
+      <p class="display-4 text-center">A web page displaying the ability to perform location based computations using Ruby!</p>
     </div>
-    <div class="col col-sm-4">
-      <img src="http://www.texample.net/media/tikz/examples/PNG/spherical-and-cartesian-grids.png" alt="World with mat coordinate grid">
-    </div>
+    <!-- w/ bg-primary text-center p25 -->
   </div>
+  <div class="col-5 col-md-4 col-sm-4">
+    <img class="center-block" src="http://www.texample.net/media/tikz/examples/PNG/spherical-and-cartesian-grids.png" alt="World with mat coordinate grid" width="310" height="310">
+  </div>
+</div>
+<div class="container">
   <div class="row">
-    <div class="col-md-offset-4 col-md-4">
+    <div class="col-2 col-md-2">hey column</div>
+    <div class="col-4 col-md-4">
       <!-- <form method="POST" action="/address">
         Lattitude:<br>
         <input type="text" name="lat"><br>
@@ -23,10 +23,11 @@
         <input type="submit" value="Submit">
       </form> -->
       <% @coordinate_list.each do |item| %>
-        <h4 class="bg-primary text-center p25">
-          <%= item %>
-        </h4>
+          <h4 class="rounded bg-primary text-center p25">
+            <%= item %>
+          </h4>
       <% end %>
     </div>
+    <div class="col-2 col-md-2 bg-secondary"> hey column </div>
   </div>
 </div>
