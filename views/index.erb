@@ -1,18 +1,31 @@
 <div class="container-fluid">
   <div class="row">
+    <div class="col col-sm-8">
+      <div class="jumbotron jumbotron-fluid">
+        <h1 class="display-4">Hello, world!</h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+      </div>
+      <!-- w/ bg-primary text-center p25 -->
+    </div>
+    <div class="col col-sm-4">
+      <img src="http://www.texample.net/media/tikz/examples/PNG/spherical-and-cartesian-grids.png" alt="World with mat coordinate grid">
+    </div>
+  </div>
+  <div class="row">
     <div class="col-md-offset-4 col-md-4">
-      <h1 class="bg-primary text-center p25">
-        Bootstrapped!
-      </h1>
-      <form method="POST" action="/address">
+      <!-- <form method="POST" action="/address">
         Lattitude:<br>
         <input type="text" name="lat"><br>
         Longitude:<br>
         <input type="text" name="lng"><br><br>
         <input type="submit" value="Submit">
-      </form>
-      <% @address_list.each do |item| %>
-        <p><%= item %></p>
+      </form> -->
+      <% @coordinate_list.each do |item| %>
+        <h4 class="bg-primary text-center p25">
+          <%= item %>
+        </h4>
       <% end %>
     </div>
   </div>

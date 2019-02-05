@@ -14,17 +14,14 @@ class Main < Sinatra::Base
 
     @address_list = []
 
-    @coordinate_list.each do | coordinates |
-        address = Address.new(:lat => coordinates.lat, :lng => coordinates.lng).find_address
-        @address_list.push(address)
-    end
+    # @coordinate_list.each do | coordinates |
+    #     address = Address.new(coordinates).find_address
+    #     puts address
+    #     @address_list.push(address)
+    # end
 
     erb :index #, locals: { address: address }
   end
 
-  # post '/address' do
-  #   require 'pry'; binding.pry
-  #   params.to_s
-  # end
 
 end
