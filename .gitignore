@@ -90,7 +90,6 @@ dispatch.yaml
 dist/
 build/
 built/
-lib/
 tmp/
 
 # Serverless generated files
