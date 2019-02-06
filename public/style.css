@@ -1,14 +1,1 @@
 /* custom CSS goes here */
-body {
-  background-color: #64b026;
-}
-
-#jumbo-text{
-  font-size: 50px;
-}
-
-#shadow-box .shadow .p-3 .mb-5 .rounded .text-center {
-  color: #64b026;
-  border: 1px;
-  border-color: #a4a5a4;
-}

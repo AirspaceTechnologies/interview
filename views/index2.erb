@@ -13,50 +13,28 @@
         <h3 class="text-muted">Airspace Challenge</h3>
       </div>
 
-      <div class="jumbotron">
+      <div class="jumbotron shadow ">
         <h1 class="display-3 text-center">Geocoded!</h1>
         <hr class="my-3">
         <p id="jumbo-text" class="lead text-center">A web page displaying the ability to perform location based computations using Ruby!</p>
-        <!-- <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p> -->
       </div>
 
       <div class="row marketing justify-content-center">
         <div class="col-lg-6">
-          <% @coordinate_list.each do |item| %>
+          <% @address_list.each do |item| %>
             <div id="shadow-box" class="shadow p-3 mb-5 rounded bg-light text-center">
               <h4 class="p17">
-                <%= item[:full_address] %>
+                <%= item.full_address %>
               </h4>
               <hr class="my-3">
-              <p class="text-light">
-                <span class="rounded shadow p-1 mb-1 bg-secondary">Latitude: <%= item[:lat] %></span><br><br>
-                <span class="rounded shadow p-1 bg-secondary">Longitude: <%= item[:lng] %></span><br><br>
-                <span class="rounded shadow p-1 bg-secondary">Distance to DC: <%= item[:lng] %></span>
+              <p class="text-secondary">
+                <span class="rounded shadow p-1 mb-1 bg-white">Latitude: <%= item.lat %></span><br><br>
+                <span class="rounded shadow p-1 bg-white">Longitude: <%= item.lng %></span><br><br>
+                <span class="rounded shadow p-1 bg-white">Distance to DC: <%= item.lng %></span>
               </p>
             </div>
           <% end %>
         </div>
-        <!--
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div>
-
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-        </div> -->
       </div>
 
     </div>

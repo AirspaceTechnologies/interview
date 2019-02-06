@@ -12,6 +12,7 @@ class Address
 
   def find_address
     @result = AccessGeocoder.reverse_geocode(self.lat, self.lng).first.data["usa"]
+    puts @result
     self.full_address = "#{@result['usstnumber']} #{@result['usstaddress']}, #{@result['uscity']} #{@result['state']} #{@result['zip']}"
   end
 
