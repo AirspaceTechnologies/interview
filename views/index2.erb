@@ -1,0 +1,40 @@
+<div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills float-right">
+            <li class="nav-item">
+              <a class="nav-link active" target="_blank" href="https://linkedin.com/in/laroccintheworld">LinkedIn <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="mailto:michaellarocca90@gmail.com">Contact <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Airspace Challenge</h3>
+      </div>
+
+      <div class="jumbotron shadow ">
+        <h1 class="display-3 text-center">Geocoded!</h1>
+        <hr class="my-3">
+        <p id="jumbo-text" class="lead text-center">A web page displaying the ability to perform location based computations using Ruby!</p>
+      </div>
+
+      <div class="row marketing justify-content-center">
+        <div class="col-lg-6">
+          <% @address_list.each do |item| %>
+            <div id="shadow-box" class="shadow p-3 mb-5 rounded bg-light text-center">
+              <h4 class="p17">
+                <%= item.full_address %>
+              </h4>
+              <hr class="my-3">
+              <p class="text-secondary">
+                <span class="rounded shadow p-1 mb-1 bg-white">Latitude: <%= item.lat %></span><br><br>
+                <span class="rounded shadow p-1 bg-white">Longitude: <%= item.lng %></span><br><br>
+                <span class="rounded shadow p-1 bg-white">Distance to DC: <%= item.lng %></span>
+              </p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+    </div>

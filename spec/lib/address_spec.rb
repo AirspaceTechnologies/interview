@@ -10,7 +10,9 @@ RSpec.describe Address do
     let(:result) { [ double(data: payload) ] }
 
     it 'geocodes with Geocoder API' do
+      address.full_address = full_address
       expect(Geocoder).to receive(:search).with(full_address).and_return result
+      address.find_lat_lng()
     end
 
     it 'is geocoded' do
@@ -20,7 +22,7 @@ RSpec.describe Address do
 
   describe 'reverse geocoding' do
     let :payload do
-      {   
+      {
         'usa'=> {
           'uscity' => 'WASHINGTON',
           'usstnumber' => '1',
@@ -30,11 +32,14 @@ RSpec.describe Address do
         }
       }
     end
-    
+
     let(:result) { [ double(data: payload) ] }
 
     it 'reverse geocodes with Geocoder API' do
-      expect(Geocoder).to receive(:search).with("#{lat},#{lng}").and_return result
+      address.lat = lat
+      address.lng = lng
+      expect(Geocoder).to receive(:search).with("#{lat}, #{lng}").and_return result
+      address.find_address
     end
 
     it 'is reverse geocoded' do
