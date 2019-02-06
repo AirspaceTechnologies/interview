@@ -1,6 +1,6 @@
 require 'geocoder'
 
-Geocoder.configure(lookup: :geocoder_ca, timeout: 5)
+Geocoder.configure(lookup: :geocoder_ca, timeout: 15)
 
 class AccessGeocoder
     def self.geocode(full_address)
