@@ -51,11 +51,12 @@ RSpec.describe Address do
     let(:detroit) { FactoryGirl.build :address, :as_detroit }
     let(:kansas_city) { FactoryGirl.build :address, :as_kansas_city }
 
-    xit 'calculates distance with the Geocoder API' do
+    it 'calculates distance with the Geocoder API' do
       expect(Geocoder::Calculations).to receive(:distance_between).with detroit.coordinates, kansas_city.coordinates
+      detroit.miles_to(kansas_city)
     end
 
-    xit 'returns the distance between two addresses' do
+    it 'returns the distance between two addresses' do
       expect(detroit.miles_to(kansas_city)).to be > 0
     end
   end

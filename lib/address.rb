@@ -2,7 +2,7 @@ require_relative 'geocoding'
 
 
 class Address
-  attr_accessor :lat, :lng, :full_address
+  attr_accessor :lat, :lng, :full_address, :last_distance
 
   def initialize(args = {})
     @lat = args[:lat] if args[:lat]
@@ -10,9 +10,12 @@ class Address
     @full_address = args[:full_address] if args[:full_address]
   end
 
+  def miles_to(destination)
+    Geocoder::Calculations.distance_between(self.coordinates, destination.coordinates)
+  end
+
   def find_address
     @result = AccessGeocoder.reverse_geocode(self.lat, self.lng).first.data["usa"]
-    puts @result
     self.full_address = "#{@result['usstnumber']} #{@result['usstaddress']}, #{@result['uscity']} #{@result['state']} #{@result['zip']}"
   end
 
@@ -28,6 +31,10 @@ class Address
 
   def reverse_geocoded?
     defined?(full_address)
+  end
+
+  def coordinates
+    [self.lat, self.lng]
   end
 
 end
