@@ -24,7 +24,7 @@ class Main < Sinatra::Base
 
     @address_list.sort! { |a, b|  a.last_distance <=> b.last_distance }
 
-    erb :index2 #, locals: { address: address }
+    erb :index #, locals: { address: address }
   end
 
 
